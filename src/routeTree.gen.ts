@@ -10,33 +10,127 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalRouteRouteImport } from './routes/_portal/route'
+import { Route as PortalAdminRouteRouteImport } from './routes/_portal/admin/route'
+import { Route as PortalCashierRouteRouteImport } from './routes/_portal/cashier/route'
+import { Route as PortalFinanceRouteRouteImport } from './routes/_portal/finance/route'
+import { Route as PortalGuestRouteRouteImport } from './routes/_portal/guest/route'
+import { Route as PortalProfileRouteImport } from './routes/_portal/profile'
+import { Route as PortalAdminIndexRouteImport } from './routes/_portal/admin/index'
+import { Route as PortalAdminUsersRouteImport } from './routes/_portal/admin/users'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalRouteRoute = PortalRouteRouteImport.update({
+  id: '/_portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalAdminRouteRoute = PortalAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalCashierRouteRoute = PortalCashierRouteRouteImport.update({
+  id: '/cashier',
+  path: '/cashier',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalFinanceRouteRoute = PortalFinanceRouteRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalGuestRouteRoute = PortalGuestRouteRouteImport.update({
+  id: '/guest',
+  path: '/guest',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalProfileRoute = PortalProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalAdminIndexRoute = PortalAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalAdminRouteRoute,
+} as any)
+const PortalAdminUsersRoute = PortalAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => PortalAdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof PortalAdminRouteRouteWithChildren
+  '/cashier': typeof PortalCashierRouteRoute
+  '/finance': typeof PortalFinanceRouteRoute
+  '/guest': typeof PortalGuestRouteRoute
+  '/profile': typeof PortalProfileRoute
+  '/admin/users': typeof PortalAdminUsersRoute
+  '/admin/': typeof PortalAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cashier': typeof PortalCashierRouteRoute
+  '/finance': typeof PortalFinanceRouteRoute
+  '/guest': typeof PortalGuestRouteRoute
+  '/profile': typeof PortalProfileRoute
+  '/admin/users': typeof PortalAdminUsersRoute
+  '/admin': typeof PortalAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_portal': typeof PortalRouteRouteWithChildren
+  '/_portal/admin': typeof PortalAdminRouteRouteWithChildren
+  '/_portal/cashier': typeof PortalCashierRouteRoute
+  '/_portal/finance': typeof PortalFinanceRouteRoute
+  '/_portal/guest': typeof PortalGuestRouteRoute
+  '/_portal/profile': typeof PortalProfileRoute
+  '/_portal/admin/users': typeof PortalAdminUsersRoute
+  '/_portal/admin/': typeof PortalAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/cashier'
+    | '/finance'
+    | '/guest'
+    | '/profile'
+    | '/admin/users'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cashier'
+    | '/finance'
+    | '/guest'
+    | '/profile'
+    | '/admin/users'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/_portal'
+    | '/_portal/admin'
+    | '/_portal/cashier'
+    | '/_portal/finance'
+    | '/_portal/guest'
+    | '/_portal/profile'
+    | '/_portal/admin/users'
+    | '/_portal/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PortalRouteRoute: typeof PortalRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +142,101 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_portal': {
+      id: '/_portal'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PortalRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_portal/admin': {
+      id: '/_portal/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof PortalAdminRouteRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/_portal/cashier': {
+      id: '/_portal/cashier'
+      path: '/cashier'
+      fullPath: '/cashier'
+      preLoaderRoute: typeof PortalCashierRouteRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/_portal/finance': {
+      id: '/_portal/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof PortalFinanceRouteRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/_portal/guest': {
+      id: '/_portal/guest'
+      path: '/guest'
+      fullPath: '/guest'
+      preLoaderRoute: typeof PortalGuestRouteRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/_portal/profile': {
+      id: '/_portal/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof PortalProfileRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/_portal/admin/': {
+      id: '/_portal/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof PortalAdminIndexRouteImport
+      parentRoute: typeof PortalAdminRouteRoute
+    }
+    '/_portal/admin/users': {
+      id: '/_portal/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof PortalAdminUsersRouteImport
+      parentRoute: typeof PortalAdminRouteRoute
+    }
   }
 }
 
+interface PortalAdminRouteRouteChildren {
+  PortalAdminUsersRoute: typeof PortalAdminUsersRoute
+  PortalAdminIndexRoute: typeof PortalAdminIndexRoute
+}
+
+const PortalAdminRouteRouteChildren: PortalAdminRouteRouteChildren = {
+  PortalAdminUsersRoute: PortalAdminUsersRoute,
+  PortalAdminIndexRoute: PortalAdminIndexRoute,
+}
+
+const PortalAdminRouteRouteWithChildren =
+  PortalAdminRouteRoute._addFileChildren(PortalAdminRouteRouteChildren)
+
+interface PortalRouteRouteChildren {
+  PortalAdminRouteRoute: typeof PortalAdminRouteRouteWithChildren
+  PortalCashierRouteRoute: typeof PortalCashierRouteRoute
+  PortalFinanceRouteRoute: typeof PortalFinanceRouteRoute
+  PortalGuestRouteRoute: typeof PortalGuestRouteRoute
+  PortalProfileRoute: typeof PortalProfileRoute
+}
+
+const PortalRouteRouteChildren: PortalRouteRouteChildren = {
+  PortalAdminRouteRoute: PortalAdminRouteRouteWithChildren,
+  PortalCashierRouteRoute: PortalCashierRouteRoute,
+  PortalFinanceRouteRoute: PortalFinanceRouteRoute,
+  PortalGuestRouteRoute: PortalGuestRouteRoute,
+  PortalProfileRoute: PortalProfileRoute,
+}
+
+const PortalRouteRouteWithChildren = PortalRouteRoute._addFileChildren(
+  PortalRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PortalRouteRoute: PortalRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
